@@ -1,24 +1,31 @@
 package com.example.stopwatch
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Chronometer
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var stopwatch: Chronometer
+    private lateinit var ball: ImageView
+    private var animator: ObjectAnimator? = null
     var running = false
     var offset: Long = 0
-
     val OFFSET_KEY = "offset"
     val RUNNING_KEY = "running"
     val BASE_KEY = "base"
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        ball = findViewById(R.id.ball)
 
         stopwatch = findViewById<Chronometer>(R.id.stopwatch)
 
@@ -37,7 +44,9 @@ class MainActivity : AppCompatActivity() {
                 setBaseTime()
                 stopwatch.start()
                 running = true
+                startBallAnimation();
             }
+            startButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_scale))
         }
 
         val pauseButton = findViewById<Button>(R.id.pause_button)
@@ -47,14 +56,18 @@ class MainActivity : AppCompatActivity() {
                 stopwatch.stop()
                 running = false
             }
+            stopBallAnimation();
+            pauseButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_scale))
         }
 
         val resetButton = findViewById<Button>(R.id.reset_button)
         resetButton.setOnClickListener {
             offset = 0
             setBaseTime()
+            resetButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_scale))
         }
     }
+
 
     //    override fun onStop() {
 //        super.onStop()
@@ -90,5 +103,19 @@ class MainActivity : AppCompatActivity() {
 
     fun saveOffset() {
         offset = SystemClock.elapsedRealtime() - stopwatch.base
+
+    }
+
+
+    private fun startBallAnimation() {
+        animator = ObjectAnimator.ofFloat(ball, "rotation", 0f, 360f)
+        animator?.duration = 1000
+        animator?.repeatCount = ObjectAnimator.INFINITE
+        animator?.start()
+    }
+
+    private fun stopBallAnimation() {
+        animator?.cancel() // Останавливаем анимацию
+        ball.rotation = 0f // Сбрасываем вращение шара, если необходимо
     }
 }

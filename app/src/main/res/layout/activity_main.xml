@@ -12,21 +12,39 @@
         android:id="@+id/stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="56sp"/>
+        android:textSize="56sp"
+        android:textColor="#6200EE"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:layout_marginBottom="6dp"/>
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start"/>
+        android:text="@string/start"
+        style="@style/CustomButtonStyle"
+        android:layout_marginBottom="6dp"/>
+
     <Button
         android:id="@+id/pause_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pause"/>
+        android:text="@string/pause"
+        style="@style/CustomButtonStyle"
+        android:layout_marginBottom="6dp"/>
+
     <Button
         android:id="@+id/reset_button"
+        style="@style/CustomButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reset"/>
+        android:text="@string/reset"
+        android:layout_marginBottom="6dp"/>
+
+    <ImageView
+        android:id="@+id/ball"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/ball_shape" />
 
 </LinearLayout>
